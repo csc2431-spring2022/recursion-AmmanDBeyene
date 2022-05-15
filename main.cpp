@@ -35,9 +35,11 @@ int main() {
 	string reverses[] = {"olleh", "kravdraa", "reviver"};
 	size_t passed = 0;
 	int minimumResponses[TESTS];
-	for (int i = 0; i < TESTS; ++i) {
+	for (unsigned int i = 0; i < TESTS; ++i) {
 		minimumResponses[i] = -1;
 	}
+
+
 
 	cout << "Testing Fibonacci" << endl;
 	for (int i = 0; i < 10; ++i) {
@@ -48,18 +50,20 @@ int main() {
 
 
 	cout << "Testing Minimum Position Finding" << endl;
-	for (int i = 0; i < TESTS; ++i) {
+	for (unsigned int i = 0; i < TESTS; ++i) {
 		minimumResponses[i] = MinimumPosition(data[i], ELEMENTS);
 		if (minimumResponses[i] == minimumSolutions[i]){
 			cout << "\tPassed " << ++passed << " tests" << endl;
 		}
 	}
+
+
 	cout << "Testing Sorting" << endl;
 	bool equal;
-	for (int i = 0; i < TESTS; ++i) {
+	for (unsigned int i = 0; i < TESTS; ++i) {
 		SelectionSort(data[i], ELEMENTS);
 		equal = true;
-		for (int j = 0; j < ELEMENTS; ++j) {
+		for (unsigned int j = 0; j < ELEMENTS; ++j) {
 			if (data[i][j] != sortedArrays[i][j]){
 				equal = false;
 				cerr << "Test " << i << " position " << j << " values: ";
@@ -71,9 +75,10 @@ int main() {
 			cout << "\tPassed " << ++passed << " tests" << endl;
 		}
 	}
+
 	cout << "Testing Reverse Strings" << endl;
 	stringstream out;
-	for (int i = 0; i < TESTS; ++i) {
+	for (unsigned int i = 0; i < TESTS; ++i) {
 		out.clear();
 		out.str("") ;
 		PrintReverseString(strings[i], out);
@@ -85,14 +90,65 @@ int main() {
 }
 
 unsigned long long int Fibonacci(unsigned int n){
-	return 0;
+
+
+    if(n == 0){
+        return 0;
+    }else if( n==1 || n ==2){
+        return 1;
+    }
+
+    return Fibonacci(n-1)+ Fibonacci(n-2);
+
+
 }
 void PrintReverseString(const string& str, ostream& output){
+
+    string reverse = "";
+
+    for( int i = str.length()-1; i>=0; i--){
+        reverse += str.at(i);
+    }
+
+   output<<reverse;
+
 }
+
+
 // You may change the parameters of these functions
 size_t MinimumPosition(const int array[], size_t size){
-	return 0;
+
+    if(size==1){
+        return 0;
+    }
+
+    if(array[size-1] < array[MinimumPosition(array, size-1)]){
+        return size-1;
+    }else{
+        return MinimumPosition(array, size-1);
+    }
+
 }
+
+
+//{7, 5, 4, 1, 3, 0, 9},
+// doesnt it have to be a reference?
 void SelectionSort(int array[], size_t size){
+
+    int temp = 0;
+    if(size > 1){
+        for(unsigned int i = 0; i<size; i++) {
+
+            if(array[size-1] < array[size-2]) {
+                temp = array[size-2];
+                array[size-2] = array[size-1];
+                array[size-1] = temp;
+            }
+
+            SelectionSort(array, size - 1);
+
+        }
+
+    }
 
 }
